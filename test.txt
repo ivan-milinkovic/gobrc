@@ -1,0 +1,6 @@
+Beograd;10.0
+Novi Sad;12.5
+Niš;15.0
+Kragujevac;11.0
+Beograd;9.5
+Novi Sad;13.0
