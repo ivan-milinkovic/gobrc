@@ -4,8 +4,14 @@ import "testing"
 
 const file_path = "test.txt"
 
-func BenchmarkProcess0(b *testing.B) {
+func BenchmarkProcess1(b *testing.B) {
 	for range b.N {
 		process1(file_path)
+	}
+}
+
+func BenchmarkProcess2(b *testing.B) {
+	for range b.N {
+		process2(file_path)
 	}
 }
