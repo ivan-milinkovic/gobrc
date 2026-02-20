@@ -15,3 +15,9 @@ func BenchmarkProcess2(b *testing.B) {
 		process2(file_path)
 	}
 }
+
+func BenchmarkProcess3(b *testing.B) {
+	for range b.N {
+		process3(file_path)
+	}
+}
