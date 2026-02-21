@@ -39,3 +39,24 @@ func read_until_new_line(r *bufio.Reader, bytes []byte) (length int, colon_index
 	}
 	return i, ci, nil
 }
+
+// Combine array of maps into one map
+func merge_results(res_acc []map[string]Stats) map[string]Stats {
+	var res_com = make(map[string]Stats) // combined results
+	for i := range res_acc {
+		var res = res_acc[i]
+		for name := range res {
+			var stats2 = res[name]
+			var stats, isFound = res_com[name]
+			if !isFound {
+				res_com[name] = stats2
+				continue
+			}
+			stats.min = min(stats.min, stats2.min)
+			stats.max = min(stats.max, stats2.max)
+			stats.mean += stats2.mean
+			stats.count += stats2.count
+		}
+	}
+	return res_com
+}

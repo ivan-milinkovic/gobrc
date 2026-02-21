@@ -12,12 +12,9 @@ func process_seq_scan(file_path string) (map[string]Stats, error) {
 		return nil, err
 	}
 	defer file.Close()
-	// var reader io.Reader = file
-	var reader = bufio.NewReader(file)
-
+	sc := bufio.NewScanner(file)
 	res := make(map[string]Stats)
 
-	sc := bufio.NewScanner(reader)
 	for sc.Scan() {
 		line := sc.Bytes()
 		bname, btemp := line_parts(line) // inlined

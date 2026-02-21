@@ -27,7 +27,7 @@ func process_conc_reads(file_path string) (map[string]Stats, error) {
 
 	var results_chan = make(chan map[string]Stats)
 	for i := range nworkers {
-		go sub_process(file_path, i, chunk_size, results_chan)
+		go sub_process_conc_reads(file_path, i, chunk_size, results_chan)
 	}
 
 	for res := range results_chan {
@@ -64,7 +64,7 @@ func process_conc_reads(file_path string) (map[string]Stats, error) {
 	return res_combined, nil
 }
 
-func sub_process(file_path string, chunk_index int, chunk_size int64, output chan<- map[string]Stats) {
+func sub_process_conc_reads(file_path string, chunk_index int, chunk_size int64, output chan<- map[string]Stats) {
 	file, err := os.Open(file_path)
 	if err != nil {
 		panic(err)
