@@ -15,6 +15,11 @@ func line_parts(line []byte) ([]byte, []byte) {
 			break
 		}
 	}
+	if idelimiter == -1 {
+		sline := string(line)
+		println(sline)
+		panic("colon \";\" not found")
+	}
 	bname := line[0:idelimiter]
 	btemp := line[idelimiter+1:]
 	return bname, btemp

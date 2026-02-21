@@ -14,6 +14,7 @@ func main() {
 	// res, err := process_conc_reads(file)
 	// res, err := process_conc_cons(file)
 	// res, err := process_conc_slots(file)
+	// res, err := process_conc_buff(file)
 
 	println(time.Since(t0).String())
 	if err != nil {
