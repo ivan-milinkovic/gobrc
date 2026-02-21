@@ -6,16 +6,19 @@ import (
 )
 
 // const file = "external/measurements_10k.txt"
-// const buff_size = 50_000 // ~50kB for measurements_10k.txt
+// const buff_size = 50_000 // ~50kB
 
 // const file = "external/measurements_1M.txt"
-// const buff_size = 5_000_000 // ~5MB for measurements_1M.txt
+// const buff_size = 5_000_000 // ~5MB
 
 // const file = "external/measurements_10M.txt"
-// const buff_size = 50_000_000 // ~100MB, for measurements_10M.txt
+// const buff_size = 50_000_000 // ~100MB
 
-const file = "external/measurements_100M.txt"
-const buff_size = 100_000_000 // ~100MB, for measurements_100M.txt
+// const file = "external/measurements_100M.txt"
+// const buff_size = 100_000_000 // ~100MB
+
+const file = "external/measurements_1B.txt"
+const buff_size = 200_000_000 // ~200MB
 
 func main() {
 	var t0 = time.Now()
