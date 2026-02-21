@@ -21,7 +21,7 @@ It took 6 minutes 3 seconds to generate measurements_1B.txt file of 14.8 GiB in 
 # Test
 
 ```sh
-go test -bench . -run NONE -bench=^BenchmarkProcessConcurrentBuffer$ -cpuprofile=cpu.prof
+go test -bench . -run NONE -bench=^BenchmarkProcessConcurrentBuffer$ -cpuprofile="cpu.prof"
 go tool pprof -http=:8080 cpu.prof
 ```
 
