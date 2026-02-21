@@ -2,7 +2,8 @@ package main
 
 import "testing"
 
-const test_file = "external/measurements_10k.txt"
+const test_file = file
+const test_buff_size = buff_size
 
 func BenchmarkProcessSeqScan(b *testing.B) {
 	for range b.N {
@@ -22,7 +23,7 @@ func BenchmarkProcessConcurrentReads(b *testing.B) {
 	}
 }
 
-func BenchmarkProcessConcurrentConsumers(b *testing.B) {
+func BenchmarkProcessConcurrentCopies(b *testing.B) {
 	for range b.N {
 		process_conc_copies(test_file)
 	}
@@ -36,6 +37,6 @@ func BenchmarkProcessConcurrentSlots(b *testing.B) {
 
 func BenchmarkProcessConcurrentBuffer(b *testing.B) {
 	for range b.N {
-		process_conc_buff(test_file)
+		process_conc_buff(test_file, test_buff_size)
 	}
 }

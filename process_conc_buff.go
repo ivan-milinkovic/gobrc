@@ -9,7 +9,7 @@ import (
 
 // check if it reports the correct number of results as other versions
 
-func process_conc_buff(file_path string) (map[string]Stats, error) {
+func process_conc_buff(file_path string, buff_size int) (map[string]Stats, error) {
 	var file, err = os.Open(file_path)
 	if err != nil {
 		return nil, err
@@ -27,7 +27,6 @@ func process_conc_buff(file_path string) (map[string]Stats, error) {
 	var w_output = make(chan map[string]Stats, nworkers) // worker output
 	var acc_res = make([]map[string]Stats, 0)
 
-	var buff_size = 10000
 	var w_chunk_size = buff_size / nworkers // chunk size per worker
 	var buff = make([]byte, buff_size)
 
