@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func process4(file_path string) (map[string]Stats, error) {
+func process_conc_reads(file_path string) (map[string]Stats, error) {
 	file, err := os.Open(file_path)
 	if err != nil {
 		panic(err)
@@ -71,6 +71,7 @@ func sub_process(file_path string, chunk_index int, chunk_size int64, output cha
 	}
 	defer file.Close()
 	var reader = bufio.NewReader(file)
+	var sc = bufio.NewScanner(reader)
 
 	// position on next new line
 	if chunk_index > 0 {
@@ -90,23 +91,16 @@ func sub_process(file_path string, chunk_index int, chunk_size int64, output cha
 	}
 
 	res := make(map[string]Stats)
-	var line_storage [106]byte
-	var line_bytes = line_storage[:]
+	// var line_storage [106]byte
+	// var line_bytes = line_storage[:]
 
 	var count int64 = 0
-	for {
-		var length, idel, err = read_until_new_line(reader, line_bytes)
-		if err != nil {
-			if err == io.EOF {
-				break
-			} else {
-				panic(err)
-			}
-		}
-		var name_bytes = line_bytes[0:idel]
-		var temp_bytes = line_bytes[idel+1 : length]
-		name := string(name_bytes)     // does not escape
-		temp_str := string(temp_bytes) // does not escape
+	for sc.Scan() {
+		line := sc.Bytes()
+		name_bytes, temp_bytes := line_parts(line) // inlined
+		name := string(name_bytes)
+		temp_str := string(temp_bytes)
+
 		temp, err := strconv.ParseFloat(temp_str, 64)
 		if err != nil {
 			panic("Bad input")

@@ -5,9 +5,13 @@ import (
 	"time"
 )
 
+const file = "external/measurements_1M.txt"
+
 func main() {
 	var t0 = time.Now()
-	res, err := process3("external/measurements_10M.txt")
+	// res, err := process_seq_scan(file)
+	res, err := process_seq_manual(file)
+	// res, err := process_conc_reads(file)
 	println(time.Since(t0).String())
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)

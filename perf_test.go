@@ -2,28 +2,22 @@ package main
 
 import "testing"
 
-const file_path = "test.txt"
+const test_file = "external/measurements_10k.txt"
 
-func BenchmarkProcess1(b *testing.B) {
+func BenchmarkProcessSeqScan(b *testing.B) {
 	for range b.N {
-		process1(file_path)
+		process_seq_scan(test_file)
 	}
 }
 
-func BenchmarkProcess2(b *testing.B) {
+func BenchmarkProcessSeqManual(b *testing.B) {
 	for range b.N {
-		process2(file_path)
+		process_seq_manual(test_file)
 	}
 }
 
-func BenchmarkProcess3(b *testing.B) {
+func BenchmarkProcessConcurrentReads(b *testing.B) {
 	for range b.N {
-		process3(file_path)
-	}
-}
-
-func BenchmarkProcess4(b *testing.B) {
-	for range b.N {
-		process4(file_path)
+		process_conc_reads(test_file)
 	}
 }
