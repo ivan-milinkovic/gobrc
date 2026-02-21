@@ -8,7 +8,8 @@ import (
 	"strings"
 )
 
-func process_conc_consumers(file_path string) (map[string]Stats, error) {
+// Reads lines in the main routine and sends copies to worker goroutines
+func process_conc_copies(file_path string) (map[string]Stats, error) {
 	var file, err = os.Open(file_path)
 	if err != nil {
 		return nil, err
@@ -22,7 +23,7 @@ func process_conc_consumers(file_path string) (map[string]Stats, error) {
 	var acc_res = make([]map[string]Stats, 0, nworkers) // accumulated results per worker
 
 	for range nworkers {
-		go sub_process_conc_consumers(ch_lines, ch_res)
+		go process_conc_copies_consumers(ch_lines, ch_res)
 	}
 
 	for sc.Scan() {
@@ -48,7 +49,7 @@ func process_conc_consumers(file_path string) (map[string]Stats, error) {
 	return res, nil
 }
 
-func sub_process_conc_consumers(ch_lines <-chan string, ch_res chan<- map[string]Stats) {
+func process_conc_copies_consumers(ch_lines <-chan string, ch_res chan<- map[string]Stats) {
 	var res = make(map[string]Stats)
 	for line := range ch_lines {
 		parts := strings.Split(line, ";")
