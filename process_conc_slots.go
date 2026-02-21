@@ -8,8 +8,6 @@ import (
 	"sync/atomic"
 )
 
-const MAX_LINE_LENGTH = 106
-
 type BuffSlot struct {
 	taken atomic.Bool
 	buff  [MAX_LINE_LENGTH]byte

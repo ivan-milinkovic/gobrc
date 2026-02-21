@@ -5,6 +5,8 @@ import (
 	"io"
 )
 
+const MAX_LINE_LENGTH = 106
+
 func line_parts(line []byte) ([]byte, []byte) {
 	var idelimiter = -1
 	for i, c := range line {
