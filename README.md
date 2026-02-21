@@ -4,7 +4,7 @@ A solution to "One Billion Rows Challenge", focusing on performance, without out
 
 Time: 
 ~13.3s on M1 Pro, NumCPU = 10
-~ 9.4s on Ryzen 9800X3D, NumCPU = 16
+~ 8.7s on Ryzen 9800X3D, NumCPU = 16
 
 # Setup
 
