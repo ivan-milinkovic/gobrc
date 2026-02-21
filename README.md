@@ -2,7 +2,7 @@
 
 A solution to "One Billion Rows Challenge", focusing on performance, without output verification.
 
-Time: 
+Time:
 ~13.3s on M1 Pro, NumCPU = 10
 ~ 8.7s on Ryzen 9800X3D, NumCPU = 16
 
@@ -17,6 +17,8 @@ python3 create_measurements.py 1_000_000_000
 ```
 
 It took 6 minutes 3 seconds to generate measurements_1B.txt file of 14.8 GiB in size.
+
+If git does the crlf conversion on the checked-in measurements_10k.txt, the parsing will fail.
 
 # Test
 
