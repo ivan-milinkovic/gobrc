@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-// does not report the same number of results as other versions, check indices logic
+// check if it reports the correct number of results as other versions
 
 func process_conc_buff(file_path string) (map[string]Stats, error) {
 	var file, err = os.Open(file_path)
