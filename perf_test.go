@@ -24,9 +24,12 @@ func BenchmarkProcessConcurrentReads(b *testing.B) {
 
 func BenchmarkProcessConcurrentConsumers(b *testing.B) {
 	for range b.N {
-		process_conc_cons(test_file)
+		process_conc_copies(test_file)
 	}
 }
 
+func BenchmarkProcessConcurrentSlots(b *testing.B) {
+	for range b.N {
+		process_conc_slots(test_file)
 	}
 }

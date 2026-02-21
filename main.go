@@ -12,7 +12,8 @@ func main() {
 	res, err := process_seq_scan(file)
 	// res, err := process_seq_manual(file)
 	// res, err := process_conc_reads(file)
-	// res, err := process_conc_consumers(file)
+	// res, err := process_conc_cons(file)
+	// res, err := process_conc_slots(file)
 
 	println(time.Since(t0).String())
 	if err != nil {
