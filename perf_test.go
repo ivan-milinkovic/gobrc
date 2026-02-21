@@ -33,3 +33,9 @@ func BenchmarkProcessConcurrentSlots(b *testing.B) {
 		process_conc_slots(test_file)
 	}
 }
+
+func BenchmarkProcessConcurrentBuffer(b *testing.B) {
+	for range b.N {
+		process_conc_buff(test_file)
+	}
+}

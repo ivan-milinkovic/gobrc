@@ -7,6 +7,8 @@ import (
 	"strconv"
 )
 
+// does not report the same number of results as other versions, check indices logic
+
 func process_conc_buff(file_path string) (map[string]Stats, error) {
 	var file, err = os.Open(file_path)
 	if err != nil {
@@ -29,10 +31,11 @@ func process_conc_buff(file_path string) (map[string]Stats, error) {
 	var w_chunk_size = buff_size / nworkers // chunk size per worker
 	var buff = make([]byte, buff_size)
 
+	var iter = 0
 	for {
 		nread, err := io.ReadAtLeast(file, buff, buff_size)
 		if err != nil {
-			if err == io.EOF {
+			if err == io.EOF || err == io.ErrUnexpectedEOF {
 				break
 			}
 			panic(err)
@@ -46,11 +49,12 @@ func process_conc_buff(file_path string) (map[string]Stats, error) {
 				break
 			}
 		}
-		file.Seek(int64(last_n-nread), io.SeekCurrent)
+		file.Seek(int64(last_n-nread+1), io.SeekCurrent)
 
 		var start = 0
 		var end = w_chunk_size
-		for i := range nworkers {
+		for range nworkers {
+			var i = 0
 			end = start + w_chunk_size
 			if i == nworkers-1 { // last worker can read through the end which is guaranteed to be a new line by the above logic
 				end = last_n + 1
@@ -58,13 +62,11 @@ func process_conc_buff(file_path string) (map[string]Stats, error) {
 				for j := end - 1; j > start; j-- {
 					if buff[j] == '\n' {
 						end = j + 1
+						break
 					}
 				}
 			}
 
-			if buff[start] == '\n' {
-				panic("line bytes start with line feed (\\n=10)")
-			}
 			go sub_process_conc_buff(buff[start:end], w_output)
 
 			start = end
@@ -78,6 +80,8 @@ func process_conc_buff(file_path string) (map[string]Stats, error) {
 				break
 			}
 		}
+
+		iter++
 	}
 
 	var res = merge_results(acc_res)
@@ -92,12 +96,6 @@ func process_conc_buff(file_path string) (map[string]Stats, error) {
 
 func sub_process_conc_buff(buff []byte, output chan<- map[string]Stats) {
 	var buff_len = len(buff)
-	if buff[0] == '\n' {
-		panic("line bytes start with line feed (\\n=10)")
-	} else if buff[buff_len-1] != '\n' {
-		println(string(buff[buff_len-5:]))
-		panic("line bytes do not end with line feed (\\n=10)")
-	}
 	var res = make(map[string]Stats)
 	var lstart = 0
 	for {
